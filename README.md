@@ -10,7 +10,7 @@ Please check the tests to see examples of how to use them:
 - [IO](test/Monad/IOSpec.hs)
 - [Reader](test/Monad/ReaderSpec.hs) 
 
-And here the implementations: [Monads](src/Monad)
+And here the implementations: [TypeClasses](src/) & [Monads](src/Monad)
 
 ## Build
 ```shell
