@@ -58,7 +58,7 @@ spec = do
                    return ("Welcome "<> head superman <> ", " <> head batman <> " and " <> head spiderman <> " to the team!")
       runReader ", " reader `shouldBe` "Welcome Clark, Bruce and Peter to the team!"
 
-    it "should be able to read from the dependency in a simple way inside a computation (using ask function and do-notation)" $ do
+    it "should be able to access to the dependency in a simple way inside a computation (using ask function and do-notation)" $ do
       let parseCsvReader :: String -> Reader Delimiter [String]
           parseCsvReader line = do
                               delimiter <- ask
