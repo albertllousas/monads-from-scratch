@@ -31,7 +31,7 @@ spec = do
       let reader = (parseValues "Jane::Doe")
       runReader "::" (map toUppercase <$> reader) `shouldBe` ["JANE","DOE"]
 
-  describe "Using applicative instance of maybe data type" $ do
+  describe "Using applicative instance of reader data type" $ do
 
     it "should lift a value into a dependant computation" $ do
       runReader "whatever" (pure "hello") `shouldBe` "hello"
@@ -44,7 +44,7 @@ spec = do
           welcomeSuperHeroes l1 l2 l3 = "Welcome "<> head l1 <> ", " <> head l2 <> " and " <> head l3 <> " to the team!"
       runReader ", " (pure welcomeSuperHeroes <*> superman <*> batman <*> spiderman) `shouldBe` "Welcome Clark, Bruce and Peter to the team!"
 
-  describe "Using monad instance of maybe data type" $ do
+  describe "Using monad instance of reader data type" $ do
 
     it "should combine two computations that depend on a shared dependency" $ do
       let reader = parseValues "Clark, Kent" >>= (\superman -> parseValues "Bruce, Wayne" $> (\batman -> (head superman, head batman)))
