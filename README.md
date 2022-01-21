@@ -1,7 +1,7 @@
 # monads-from-scratch
 
-This repo defines some of the most useful monads in haskell from scratch, skipping some mathematical concepts, in order 
-to understand this useful algebraic construct.
+This repo defines some of the most used monads in haskell from scratch, skipping some mathematical concepts, in order 
+to understand this useful algebraic constructs.
 
 Please check the tests to see examples of how to use them:
 
