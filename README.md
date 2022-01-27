@@ -9,7 +9,8 @@ Please check the tests to see examples of how to use them:
 - [Either](test/Monad/EitherSpec.hs)
 - [IO](test/Monad/IOSpec.hs)
 - [List](test/Monad/ListSpec.hs)
-- [Reader](test/Monad/ReaderSpec.hs) 
+- [Reader](test/Monad/ReaderSpec.hs)
+- [Writer](test/Monad/WriterSpec.hs)
 
 And here the implementations: [TypeClasses](src) & [Monads](src/Monad)
 

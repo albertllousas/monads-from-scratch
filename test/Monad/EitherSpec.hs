@@ -62,7 +62,7 @@ spec = do
       account >>= (deposit 100) `shouldBe` (Right $ Account {balance = 100.0, owner = "Jane Doe"})
       account >>= (withdraw 100) `shouldBe` Left "not-enough-balance"
 
-    it "should create a workflow with functions that either fail or success (using do-notation)" $ do
+    it "should compose a workflow with functions that either fail or success (using do-notation)" $ do
       let account = createAccount "Jane Doe"
       let result = do
                    account' <- deposit 100 account
