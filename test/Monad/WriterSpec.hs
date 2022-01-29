@@ -22,12 +22,12 @@ spec = do
 
   describe "Running the writer" $ do
 
-    it "should run a function that writes a log" $ do
+    it "should run a function that calculates a result and writes a log" $ do
       runWriter (sum 1 2) `shouldBe` (["sum 1 + 2"], 3)
 
   describe "Using functor instance of writer data type" $ do
 
-    it "should apply a transformation over the result of a computation writes a log" $ do
+    it "should apply a transformation over the result of a computation that produce a result along with a log" $ do
       runWriter ((+1) <$> (sum 1 2)) `shouldBe` (["sum 1 + 2"], 4)
 
   describe "Using applicative instance of writer data type" $ do
@@ -36,7 +36,7 @@ spec = do
       let writer = (pure "hello") :: Writer [String] String
       runWriter writer `shouldBe` ([], "hello")
 
-    it "should apply a normal function (without producing logs) over the results of computations that are producing logs" $ do
+    it "should apply a normal function (without producing logs) over the results of computations that also produce logs" $ do
       let firstSumWithLog = (sum 1 2)
       let secondSumWithLog = (sum 3 4)
       let multiplicationWithoutLog a b = a * b
@@ -44,7 +44,7 @@ spec = do
 
   describe "Using monad instance of writer data type" $ do
 
-    it "should combine two computations accumulating logs" $ do
+    it "should combine two computations that are accumulating along with the results" $ do
       let writer = sum 1 2 >>= (\x -> sum x 3 )
       runWriter writer `shouldBe` (["sum 1 + 2","sum 3 + 3"], 6)
 
@@ -55,7 +55,7 @@ spec = do
                    diff x y
       runWriter writer `shouldBe` (["sum 5 + 5","sum 1 + 2","diff 10 - 3"],7)
 
-  it "should be able to write additional logs in a simple way inside a computation (using tell function and do-notation)" $ do
+    it "should be able to write additional logs in a simple way inside a computation (using tell function and do-notation)" $ do
       let writer = do
                    x <- sum 5 5
                    y <- sum 1 2

@@ -64,9 +64,11 @@ spec = do
 
     it "should compose a workflow with functions that either fail or success (using do-notation)" $ do
       let account = createAccount "Jane Doe"
+      let resultWithoutDoNotation = deposit 100 account >>= (\x -> withdraw 50 x >>= (\y -> deposit 500 y))
       let result = do
                    account' <- deposit 100 account
                    account'' <-  withdraw 50 account'
                    account'''<- deposit 500 account''
                    return account'''
       result `shouldBe` (Right $ Account {balance = 550.0, owner = "Jane Doe"})
+      result `shouldBe` resultWithoutDoNotation

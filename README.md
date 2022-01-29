@@ -11,6 +11,7 @@ Please check the tests to see examples of how to use them:
 - [List](test/Monad/ListSpec.hs)
 - [Reader](test/Monad/ReaderSpec.hs)
 - [Writer](test/Monad/WriterSpec.hs)
+- [State](test/Monad/StateSpec.hs)
 
 And here the implementations: [TypeClasses](src) & [Monads](src/Monad)
 
