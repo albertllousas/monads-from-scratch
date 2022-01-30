@@ -10,29 +10,6 @@ import Data.Char (toUpper)
 import Data.List.Split
 import Prelude hiding (Either, Right, Left, (<$>), (<*>), fmap, pure, return, (>>=), sum)
 
-
---https://en.wikipedia.org/wiki/Odds_and_evens_(hand_game)#:~:text=Odds%20and%20evens%20is%20a,their%20closed%20hand%2C%20while%20another
---https://hugopeters.me/posts/13/
---https://wiki.haskell.org/State_Monad
---http://learnyouahaskell.com/for-a-few-monads-more
---https://mmhaskell.com/monads/state
---https://williamyaoh.com/posts/2020-07-12-deriving-state-monad.html
---superheroes team??
-
---https://vmayakumar.wordpress.com/2015/12/31/magic-of-state-monad/
---https://www.slideshare.net/pjschwarz/state-monad-212839068
----- Calculator
---sum :: (Show a, Num a) => a -> a -> Writer [String] a
---sum a b = Writer ([("sum " <> show a <> " + " <> show b)], (a + b))
---
---diff :: (Show a, Num a) => a -> a -> Writer [String] a
---diff a b = Writer ([("diff " <> show a <> " - " <> show b)], (a - b))
---
---spec :: Spec
---spec = do
---
---https://en.wikipedia.org/wiki/Matching_pennies
-
 -- Matching pennies game
 -- https://en.wikipedia.org/wiki/Matching_pennies
 
