@@ -6,7 +6,7 @@ import Monad
 import Prelude hiding (Functor, Monad)
 
 -- | The State type represents a computation, which takes a state and returns a result along with a new state (a pure stateful computation).
--- | Check the Test module to see examples of how to use it: 'ReaderSpec'.
+-- | Check the Test module to see examples of how to use it: 'StateSpec'.
 
 data State s a = State(s -> (s, a))
 

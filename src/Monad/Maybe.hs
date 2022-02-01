@@ -5,7 +5,7 @@ import ApplicativeFunctor
 import Monad
 import Prelude hiding (Functor, Maybe, Just, Nothing, Monad)
 
--- | The Maybe type encapsulates an optional value. A value of type Maybe a either contains a value of type a, or it is empty.
+-- | The Maybe type encapsulates an optional value, either contains a value of type a, or it is empty.
 -- | Check the Test module to see examples of how to use it: 'MaybeSpec'.
 
 data Maybe a = Nothing | Just a deriving (Eq, Show)

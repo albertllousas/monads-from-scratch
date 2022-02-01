@@ -39,9 +39,22 @@ spec = do
 
   describe "Using functor instance of state transformer data type" $ do
 
-    it "should map over the result of the transformed monad with state" $ do
+    it "should map over a transformed monad with state" $ do
       let message :: LoginAttempt -> String
           message ValidPassword = "Hi there! Welcome again."
           message InvalidPassword = "Invalid credentials, please, try again."
       runStateT (message <$> (checkLoginAttempt 5 "pass" "pass")) 0 `shouldBe` Right (0, "Hi there! Welcome again.")
       runStateT (message <$> (checkLoginAttempt 5 "pass" "invalid")) 0 `shouldBe` Right (1, "Invalid credentials, please, try again.")
+
+  describe "Using applicative instance of state transformer data type" $ do
+
+    it "should lift a value into a monad with state capabilities" $ do
+      let eitherWithState = (pure "hello") :: StateT () (Either String) String
+      runStateT eitherWithState () `shouldBe` Right ((), "hello")
+
+    it "should apply a normal function (without dealing with monads) over transformed monads with state capabilities" $ do
+      let first = checkLoginAttempt 5 "pass" "pass"
+      let second = checkLoginAttempt 5 "pass" "invalid"
+      let combineAttempts :: LoginAttempt -> LoginAttempt -> [LoginAttempt]
+          combineAttempts la1 la2 = [la1, la2]
+      runStateT (pure combineAttempts <*> first <*> second) 0 `shouldBe` Right (1, [ValidPassword, InvalidPassword])
