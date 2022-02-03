@@ -48,7 +48,7 @@ spec = do
       let writer = sum 1 2 >>= (\x -> sum x 3 )
       runWriter writer `shouldBe` (["sum 1 + 2","sum 3 + 3"], 6)
 
-    it "should compose a workflow that accumulates the logs of the executions (using do-notation)" $ do
+    it "should simplify workflows that accumulate the logs of the executions using do-notation" $ do
       let writer = do
                    x <- sum 5 5
                    y <- sum 1 2

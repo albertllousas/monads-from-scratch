@@ -19,3 +19,6 @@ instance Monad m => Functor (StateT s m) where
 instance Monad m => ApplicativeFunctor (StateT s m) where
   pure a =  StateT $ \state -> return (state, a)
   (<*>) (StateT fnMonadFn) (StateT fnMonadA) = StateT $ \s -> fnMonadFn s >>= \(s', fn) -> fnMonadA s' >>= \(s'', a) -> return (s'', fn a)
+
+instance Monad m => Monad (StateT s m) where
+  (>>=) (StateT fnMonadA) fn = StateT $ \state -> fnMonadA state >>= \(state', a) -> runStateT (fn a) state'

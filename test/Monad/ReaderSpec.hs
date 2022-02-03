@@ -50,7 +50,7 @@ spec = do
       let reader = parseValues "Clark, Kent" >>= (\superman -> parseValues "Bruce, Wayne" $> (\batman -> (head superman, head batman)))
       runReader  reader ", " `shouldBe` ("Clark", "Bruce")
 
-    it "should compose a workflow with functions that have a common dependency (using do-notation)" $ do
+    it "should simplify workflows with functions that have a common dependency using do-notation" $ do
       let reader = do
                    superman <- parseValues "Clark, Kent"
                    batman <- parseValues "Bruce, Wayne"

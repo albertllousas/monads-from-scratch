@@ -48,7 +48,7 @@ spec = do
     it "should apply a function on an input/output action that performs another input/output" $ do
       unsafePerformIO (readLine "Jane" >>= (\name -> readLine "Doe" $> (\surname -> name <> " " <> surname))) `shouldBe` "Jane Doe"
 
-    it "should compose a workflow with input/output operations (using do-notation)" $ do
+    it "should simplify workflows with input/output operations using do-notation" $ do
       let result = do
                    _ <- putLine "Insert name"
                    firstName <- readLine "Jane"

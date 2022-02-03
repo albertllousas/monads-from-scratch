@@ -1,4 +1,4 @@
---{-# LANGUAGE RebindableSyntax #-}
+{-# LANGUAGE RebindableSyntax #-}
 module Monad.Transformer.StateTSpec where
 
 import Test.Hspec
@@ -58,3 +58,18 @@ spec = do
       let combineAttempts :: LoginAttempt -> LoginAttempt -> [LoginAttempt]
           combineAttempts la1 la2 = [la1, la2]
       runStateT (pure combineAttempts <*> first <*> second) 0 `shouldBe` Right (1, [ValidPassword, InvalidPassword])
+
+  describe "Using monad instance of state data type" $ do
+
+    it "should combine computations that output transformed monads with state capabilities" $ do
+      let eitherWithState = checkLoginAttempt 5 "pass" "invalid" >>= \_ -> checkLoginAttempt 5 "pass" "invalid"
+      runStateT eitherWithState 0 `shouldBe` Right (2, InvalidPassword)
+
+    it "should simplify workflows that combine transformed monads with state using do-notation" $ do
+      let eitherWithState = do
+                           x <- checkLoginAttempt 5 "pass" "invalid"
+                           y <- checkLoginAttempt 5 "pass" "invalid"
+                           z <- checkLoginAttempt 5 "pass" "pass"
+                           g <- checkLoginAttempt 5 "pass" "invalid"
+                           return [x, y, z, g]
+      runStateT eitherWithState 0 `shouldBe` Right (1,[InvalidPassword, InvalidPassword, ValidPassword, InvalidPassword])

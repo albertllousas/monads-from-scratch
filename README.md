@@ -1,7 +1,7 @@
 # monads-from-scratch
 
-This repository does not pretend to be a production library, it defines some of the most used monads in haskell from 
-scratch and examples on how to use them, in order to understand this useful algebraic constructs.
+This repository does not pretend to be a production library, instead, it defines the most used monads in haskell from 
+scratch and some examples on how to use them; the idea is to understand this useful algebraic constructs.
 
 Note: Some mathematical concepts are skipped. 
 

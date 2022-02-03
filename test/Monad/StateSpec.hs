@@ -10,9 +10,6 @@ import Data.Char (toUpper)
 import Data.List.Split
 import Prelude hiding (Either, Right, Left, (<$>), (<*>), fmap, pure, return, (>>=), sum)
 
--- Matching pennies game
--- https://en.wikipedia.org/wiki/Matching_pennies
-
 data Winner = Player1 | Player2 deriving (Eq, Show)
 
 data CoinSide = Tails | Heads deriving (Eq, Show)
@@ -63,7 +60,7 @@ spec = do
       let state = playMatchingPennies Heads Heads >>= (\_ -> playMatchingPennies Tails Tails)
       runState state (0,0) `shouldBe` ((2,0),Player1)
 
-    it "should compose a workflow combining stateful computations (using do-notation)" $ do
+    it "should simplify workflows when combining stateful computations using do-notation" $ do
       let state = do
                    x <- playMatchingPennies Heads Heads
                    y <- playMatchingPennies Tails Heads

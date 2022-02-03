@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6877dcec03c08b3aeab0ff95614d78828063d5a5412611e309dac02b290302ca
+-- hash: 7123158a6703ac0b91ccf2ca7133af1f9060135e498f5bedd50115fce31f8ef5
 
 name:           monads-from-scratch
 version:        0.1.0.0
@@ -36,6 +36,7 @@ library
       Monad.Maybe
       Monad.Reader
       Monad.State
+      Monad.Transformer.EitherT
       Monad.Transformer.StateT
       Monad.Writer
   other-modules:
@@ -56,6 +57,7 @@ test-suite monads-from-scratch-test
       Monad.MaybeSpec
       Monad.ReaderSpec
       Monad.StateSpec
+      Monad.Transformer.EitherTSpec
       Monad.Transformer.StateTSpec
       Monad.WriterSpec
       Paths_monads_from_scratch
