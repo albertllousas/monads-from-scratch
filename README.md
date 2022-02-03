@@ -18,6 +18,7 @@ Please check the tests to see examples of how to use them.
 Monad transformers:
 
 - StateT: [Implementation](src/Monad/Transformer/StateT.hs) & [Usage](test/Monad/Transformer/StateTSpec.hs) 
+- EitherT: [Implementation](src/Monad/Transformer/EitherT.hs) & [Usage](test/Monad/Transformer/EitherTSpec.hs)
 
 Type classes:
 
