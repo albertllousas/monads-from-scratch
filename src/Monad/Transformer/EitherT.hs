@@ -6,7 +6,7 @@ import Monad
 import Monad.Either
 import Prelude hiding (Either, Functor, Monad, fmap, return, (>>=), (<$>), Right, Left)
 
--- | This transformer transforms a given monad adding it error handling provided by the either monad, as a result, a new monad with combined functionalities.
+-- | This transformer transforms a given monad, adding to it error handling capabilities provided by the either monad, as a result, a new monad with combined functionalities.
 -- | This transformer helps to reduce the boilerplate code generated when we combine monads with either.
 -- | Check the Test module to see examples of how to use it: 'StateTSpec'.
 
@@ -27,3 +27,6 @@ instance Monad m => ApplicativeFunctor (EitherT e m) where
                                   (\eitherA -> case eitherA of
                                                              (Left e) -> return (Left e)
                                                              (Right a) -> return (Right $ fn a)))
+
+instance Monad m => Monad (EitherT e m) where
+  (>>=) (EitherT mEitherA) fn = EitherT $ mEitherA >>= \either -> case either of (Left e) -> return (Left e); (Right a) -> runEitherT (fn a)

@@ -5,7 +5,7 @@ import ApplicativeFunctor
 import Monad
 import Prelude hiding (Functor, Monad, fmap, return, (>>=))
 
--- | This transformer transforms a given monad adding it the state processing capabilities provided by the state monad, as a result, a new monad with combined functionalities.
+-- | This transformer transforms a given monad, adding it to it the state processing capabilities provided by the state monad, as a result, a new monad with combined functionalities.
 -- | Check the Test module to see examples of how to use it: 'StateTSpec'.
 
 data StateT s m a = StateT (s -> m (s, a))

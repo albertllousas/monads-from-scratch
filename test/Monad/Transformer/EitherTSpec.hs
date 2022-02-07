@@ -5,32 +5,32 @@ import Test.Hspec
 import Monad.Transformer.EitherT
 import Monad.Either
 import Monad.Maybe
-import Monad.State
+import Monad.IO
 import Functor
 import Monad
 import ApplicativeFunctor
 import Data.List.Split
-import Prelude hiding (State, Either, Right, Left, (<$>), (<*>), fmap, pure, return, (>>=), sum, Just, Maybe)
+import Prelude hiding (IO, Either, Right, Left, (<$>), (<*>), fmap, pure, return, (>>=), sum, Just, Maybe)
 
+--MaybeT for find user in db and comibine with DBErrors
 
-type Change = Float
+data CsvError = FileNotFound | InvalidFileFormat deriving (Eq, Show)
 
-data PurchaseError = InsufficientMoney | OutOfStock deriving (Eq, Show)
+type Path = String
 
-data CokeVendingMachineState = CokeVendingMachineState { stock :: Int, cokePrice :: Float} deriving (Eq, Show)
+type ReadCsv = Path -> EitherT CsvError IO [[String]]
 
-type StateWithErrors e s a = EitherT e (State s) a
+readCsvSuccessfully :: [[String]] -> ReadCsv
+readCsvSuccessfully successAnswer = \path -> EitherT $ pure (Right successAnswer)
 
-buyCoke:: Float -> StateWithErrors PurchaseError CokeVendingMachineState Change
-buyCoke coins = EitherT $ (State $ \s -> case () of
-                                      _ | (coins < cokePrice s) -> (s, Left InsufficientMoney)
-                                        | (stock s == 0) -> (s, Left OutOfStock)
-                                        | otherwise -> (s { stock = (stock s) - 1 }, Right (coins - (cokePrice s))))
+readCsv :: ReadCsv
+readCsv = readCsvSuccessfully [["Jane", "Doe", "1980", "NY"]]
 
-displayChangeMessage :: Change -> String
-displayChangeMessage change = "Enjoy your drink and don't forget the change " <> show change
+readCsvFailing :: CsvError -> ReadCsv
+readCsvFailing failAnswer = \path -> EitherT $ pure (Left failAnswer)
 
-initState = CokeVendingMachineState { stock = 5, cokePrice = 1.5 }
+readCsv' :: ReadCsv
+readCsv' = readCsvFailing FileNotFound
 
 spec :: Spec
 spec = do
@@ -38,14 +38,15 @@ spec = do
   describe "Running the either transformer" $ do
 
     it "should run a monad with error handling capabilities" $ do
-      let stateWithErrors = (runEitherT (buyCoke 5)) :: State CokeVendingMachineState (Either PurchaseError Change)
-      runState stateWithErrors initState `shouldBe` (CokeVendingMachineState {stock = 4, cokePrice = 1.5}, Right 3.5)
+      let io = (runEitherT (readCsv "/path/persons.csv")) :: IO (Either CsvError [[String]])
+      unsafePerformIO io `shouldBe` Right [["Jane", "Doe", "1980", "NY"]]
 
   describe "Using functor instance of either transformer data type" $ do
 
     it "should map over a transformed monad with error handling" $ do
-      let vendingMachine = (displayChangeMessage <$> (buyCoke 5))
-      runState (runEitherT vendingMachine) initState `shouldBe` (CokeVendingMachineState {stock = 4, cokePrice = 1.5}, Right "Enjoy your drink and don't forget the change 3.5")
+      let countRows matrix = length matrix
+      unsafePerformIO (runEitherT (countRows <$> (readCsv "/path/persons.csv"))) `shouldBe` (Right 1)
+      unsafePerformIO (runEitherT (countRows <$> (readCsv' "/path/persons.csv"))) `shouldBe` (Left FileNotFound)
 
   describe "Using applicative instance of either transformer data type" $ do
 
@@ -54,10 +55,23 @@ spec = do
       runEitherT maybeWithEither `shouldBe` Just (Right "hello")
 
     it "should apply a normal function (without dealing with monads) over transformed monads with error handling capabilities" $ do
-      let first = buyCoke 5
-      let second = buyCoke 5
-      let combineChanges :: Change -> Change -> Change
-          combineChanges c1 c2 = c1 + c2
-      runState (runEitherT (combineChanges <$> first <*> second)) initState `shouldBe` (CokeVendingMachineState {stock = 3, cokePrice = 1.5}, Right 7.0)
+      let first = readCsv "/path/persons.csv"
+      let second = readCsv "/path/persons_2.csv"
+      let merge :: [[String]] -> [[String]] -> [[String]]
+          merge dataset1 dataset2 = dataset1 <> dataset2
+      unsafePerformIO (runEitherT (merge <$> first <*> second)) `shouldBe` Right [["Jane", "Doe", "1980", "NY"], ["Jane", "Doe", "1980", "NY"]]
 
+
+  describe "Using monad instance of either transformer data type" $ do
+
+    it "should combine computations that output transformed monads with error handling capabilities" $ do
+      let numberOfPersons = readCsv "/path/persons.csv" >>= (\a -> readCsv "/path/persons2.csv" >>= (\b -> readCsv "/path/persons3.csv" $> \c -> length a + length b + length c))
+      unsafePerformIO (runEitherT numberOfPersons) `shouldBe` Right 3
+
+    it "should simplify workflows that combine transformed monads with error handling using do-notation" $ do
+      let mergeCSVs from1 from2 = do
+                                    x <- readCsv from1
+                                    y <- readCsv from2
+                                    return (x <> y)
+      unsafePerformIO (runEitherT (mergeCSVs "/path/persons.csv" "/path/persons2.csv")) `shouldBe` Right [["Jane", "Doe", "1980", "NY"], ["Jane", "Doe", "1980", "NY"]]
 

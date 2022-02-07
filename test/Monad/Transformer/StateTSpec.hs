@@ -59,7 +59,7 @@ spec = do
           combineAttempts la1 la2 = [la1, la2]
       runStateT (pure combineAttempts <*> first <*> second) 0 `shouldBe` Right (1, [ValidPassword, InvalidPassword])
 
-  describe "Using monad instance of state data type" $ do
+  describe "Using monad instance of state transformer data type" $ do
 
     it "should combine computations that output transformed monads with state capabilities" $ do
       let eitherWithState = checkLoginAttempt 5 "pass" "invalid" >>= \_ -> checkLoginAttempt 5 "pass" "invalid"
