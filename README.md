@@ -26,6 +26,7 @@ Type classes:
 - Functor: [Implementation](src/Functor.hs)
 - Applicative Functor: [Implementation](src/ApplicativeFunctor.hs)
 - Monad: [Implementation](src/Monad.hs)
+- Monad Transformer: [Implementation](src/MonadTransformer.hs)
 
 ## Build
 ```shell
