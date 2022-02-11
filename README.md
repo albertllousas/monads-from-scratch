@@ -7,6 +7,8 @@ Note: Some mathematical concepts are skipped.
 
 Please check the tests to see examples of how to use them.
 
+Monads:
+
 - Maybe: [Implementation](src/Monad/Maybe.hs) & [Usage](test/Monad/MaybeSpec.hs)
 - Either: [Implementation](src/Monad/Either.hs) & [Usage](test/Monad/EitherSpec.hs)
 - IO: [Implementation](src/Monad/IO.hs) & [Usage](test/Monad/IOSpec.hs)
