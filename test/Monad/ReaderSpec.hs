@@ -36,7 +36,7 @@ spec = do
     it "should lift a value into a dependant computation" $ do
       runReader (pure "hello") "whatever" `shouldBe` "hello"
 
-    it "should allow to apply a function on the results of several computations that share a common dependency" $ do
+    it "should allow to apply a multi-parameter function on the results of several computations that share a common dependency" $ do
       let superman = parseValues "Clark, Kent"
       let batman = parseValues "Bruce, Wayne"
       let spiderman = parseValues "Peter, Parker"

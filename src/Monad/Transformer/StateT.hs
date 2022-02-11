@@ -3,6 +3,7 @@ module Monad.Transformer.StateT where
 import Functor
 import ApplicativeFunctor
 import Monad
+import MonadTransformer
 import Prelude hiding (Functor, Monad, fmap, return, (>>=))
 
 -- | This transformer transforms a given monad, adding it to it the state processing capabilities provided by the state monad, as a result, a new monad with combined functionalities.
@@ -22,3 +23,6 @@ instance Monad m => ApplicativeFunctor (StateT s m) where
 
 instance Monad m => Monad (StateT s m) where
   (>>=) (StateT fnMonadA) fn = StateT $ \state -> fnMonadA state >>= \(state', a) -> runStateT (fn a) state'
+
+instance MonadTransformer (StateT s) where
+  lift m = StateT $ \state -> m >>= \a -> return (state, a)

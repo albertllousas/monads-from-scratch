@@ -3,6 +3,7 @@ module Monad.Transformer.EitherT where
 import Functor
 import ApplicativeFunctor
 import Monad
+import MonadTransformer
 import Monad.Either
 import Prelude hiding (Either, Functor, Monad, fmap, return, (>>=), (<$>), Right, Left)
 
@@ -30,3 +31,6 @@ instance Monad m => ApplicativeFunctor (EitherT e m) where
 
 instance Monad m => Monad (EitherT e m) where
   (>>=) (EitherT mEitherA) fn = EitherT $ mEitherA >>= \either -> case either of (Left e) -> return (Left e); (Right a) -> runEitherT (fn a)
+
+instance MonadTransformer (EitherT e) where
+  lift m = EitherT $ fmap (\a -> Right a) m

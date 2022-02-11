@@ -4,11 +4,13 @@ module Monad.Transformer.StateTSpec where
 import Test.Hspec
 import Monad.Transformer.StateT
 import Monad.Either
+import Monad.IO
 import Functor
 import Monad
+import MonadTransformer
 import ApplicativeFunctor
 import Data.List.Split
-import Prelude hiding (Either, Right, Left, (<$>), (<*>), fmap, pure, return, (>>=), sum)
+import Prelude hiding (Either, Right, Left, (<$>), (<*>), fmap, pure, return, (>>=), sum, IO)
 
 type ConsecutiveFailAttempts = Int
 
@@ -36,6 +38,12 @@ spec = do
     it "should run a monad with state capabilities" $ do
       runStateT (checkLoginAttempt 5 "pass" "pass") 0 `shouldBe` Right (0, ValidPassword)
       runStateT (checkLoginAttempt 5 "pass" "pass") 5 `shouldBe` Left AccountLocked
+
+  describe "Using monad transformer instance of state transformer data type" $ do
+
+    it "should lift (transform) a monad to an state transformer context" $ do
+      let transformedIO = (lift $ pure "hello") :: StateT () IO String
+      unsafePerformIO (runStateT transformedIO ()) `shouldBe` ((),"hello")
 
   describe "Using functor instance of state transformer data type" $ do
 

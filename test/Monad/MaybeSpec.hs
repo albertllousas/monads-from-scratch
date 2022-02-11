@@ -35,7 +35,7 @@ spec = do
        (+) <$> Just 1 <*> Nothing `shouldBe` Nothing
        (+) <$> Nothing <*> Just 2 `shouldBe` Nothing
 
-     it "should allow to apply multiple argument function over multiple optional values" $ do
+     it "should allow to apply multiple-argument function over multiple optional values" $ do
        let name = Just "Jane"
        let middleName = Just "Emily"
        let surname = Just "Doe"
