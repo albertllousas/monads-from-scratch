@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8118c95a5363cec99339be7878381ba2eb49c9112f54ecbeb10ff6ffbec57005
+-- hash: 7a94a0e05b79521058c8d033155ccd480869656d82d0fc777663b54c8f4fe1d8
 
 name:           monads-from-scratch
 version:        0.1.0.0
@@ -60,6 +60,7 @@ test-suite monads-from-scratch-test
       Monad.ReaderSpec
       Monad.StateSpec
       Monad.Transformer.EitherTSpec
+      Monad.Transformer.MaybeTSpec
       Monad.Transformer.StateTSpec
       Monad.WriterSpec
       Paths_monads_from_scratch
@@ -69,6 +70,7 @@ test-suite monads-from-scratch-test
   build-depends:
       HUnit
     , base >=4.7 && <5
+    , containers
     , hspec
     , monads-from-scratch
     , split

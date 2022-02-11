@@ -96,7 +96,6 @@ spec = do
                                           $> (\b -> checkSamePassword a b))
       unsafePerformIO (runEitherT ioWithEither) `shouldBe` Right True
 
-
     it "should simplify workflows that combine transformed monads with error handling using do-notation" $ do
       let reset = do
                     _ <- lift $ putLine "Password reset"
@@ -105,4 +104,3 @@ spec = do
                     c <- resetPassword a b
                     return "Your password has been reset"
       unsafePerformIO (runEitherT reset) `shouldBe` Right "Your password has been reset"
-

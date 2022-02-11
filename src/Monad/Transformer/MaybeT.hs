@@ -7,6 +7,10 @@ import Monad
 import MonadTransformer
 import Prelude hiding (Functor, Monad, fmap, return, (>>=), (<$>), Maybe, Just, Nothing)
 
+-- | This transformer transforms a given monad, adding optionality to the inner value, as a result, a new monad with combined functionalities.
+-- | Check the Test module to see examples of how to use it: 'MaybeTSpec'.
+
+
 data MaybeT m a = MaybeT (m (Maybe a))
 
 runMaybeT (MaybeT m) = m
@@ -32,14 +36,8 @@ instance Monad m => Monad (MaybeT m) where
 instance MonadTransformer MaybeT where
   lift m = MaybeT $ fmap (\a -> Just a) m
 
---https://stackoverflow.com/questions/32579133/simplest-non-trivial-monad-transformer-example-for-dummies-iomaybe
---
---read from db?
---
---
+
 --https://serokell.io/blog/whats-that-typeclass-foldable
---
---https://www.parsonsmatt.org/2016/11/18/clean_alternatives_with_maybet.html
 --
 --http://matija.me/2020/11/05/haskell-monad-transformers-intro/
 
