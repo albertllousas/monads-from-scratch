@@ -19,6 +19,7 @@ Monads:
 
 Monad transformers:
 
+- ReaderT: [Implementation](src/Monad/Transformer/ReaderT.hs) & [Usage](test/Monad/Transformer/ReaderTSpec.hs)
 - StateT: [Implementation](src/Monad/Transformer/StateT.hs) & [Usage](test/Monad/Transformer/StateTSpec.hs) 
 - EitherT: [Implementation](src/Monad/Transformer/EitherT.hs) & [Usage](test/Monad/Transformer/EitherTSpec.hs)
 - MaybeT: [Implementation](src/Monad/Transformer/MaybeT.hs) & [Usage](test/Monad/Transformer/MaybeTSpec.hs)

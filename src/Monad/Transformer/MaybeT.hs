@@ -8,7 +8,7 @@ import MonadTransformer
 import Prelude hiding (Functor, Monad, fmap, return, (>>=), (<$>), Maybe, Just, Nothing)
 
 -- | This transformer transforms a given monad, adding optionality to the inner value, as a result, a new monad with combined functionalities.
--- | Check the Test module to see examples of how to use it: 'MaybeTSpec'.
+-- | Check the Test module to see examples of how to use it: 'ReaderTSpec'.
 
 
 data MaybeT m a = MaybeT (m (Maybe a))
@@ -35,10 +35,3 @@ instance Monad m => Monad (MaybeT m) where
 
 instance MonadTransformer MaybeT where
   lift m = MaybeT $ fmap (\a -> Just a) m
-
-
---https://serokell.io/blog/whats-that-typeclass-foldable
---
---http://matija.me/2020/11/05/haskell-monad-transformers-intro/
-
--- https://making.pusher.com/unit-testing-io-in-haskell/ readerT for mocking
