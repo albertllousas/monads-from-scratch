@@ -5,7 +5,7 @@ import ApplicativeFunctor
 import Monad
 import Prelude hiding (Functor, Maybe, Monad)
 
--- | The Writer monad represents computations which produce an accumulated log of data in addition to the computed values. (log execution of functions)
+-- | The Writer monad represents computations which produce an accumulated log of data in addition to the computed values. (log an execution of functions)
 -- | Check the Test module to see examples of how to use it: 'WriterSpec'.
 
 data Writer log a = Writer (log, a)

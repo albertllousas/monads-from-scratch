@@ -1,12 +1,10 @@
 module Monad.Transformer.ReaderT where
 
-
 import Functor
 import ApplicativeFunctor
-import Monad.Maybe
 import Monad
 import MonadTransformer
-import Prelude hiding (Functor, Monad, fmap, return, (>>=), (<$>), Maybe, Just, Nothing)
+import Prelude hiding (Functor, Monad, fmap, return, (>>=), (<$>))
 
 -- | This transformer transforms a given monad, injecting a dependency to compute it, as a result, a new monad with combined functionalities.
 -- | Check the Test module to see examples of how to use it: 'ReaderTSpec'.

@@ -15,8 +15,6 @@ import Data.List.Split
 import qualified Prelude as P
 import Prelude hiding (IO, Either, Right, Left, (<$>), (<*>), fmap, pure, return, (>>=), sum, Just, Nothing, Maybe, Monad)
 
---https://blog.ssanj.net/posts/2018-01-12-stacking-the-readert-writert-monad-transformer-stack-in-haskell.html
-
 type Config = Map String String
 
 dbConfig :: Config
