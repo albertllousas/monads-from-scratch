@@ -7,7 +7,7 @@ import MonadTransformer
 import Monad.Either
 import Prelude hiding (Either, Functor, Monad, fmap, return, (>>=), (<$>), Right, Left)
 
--- | This transformer transforms a given monad, adding to it error handling capabilities provided by the either monad, as a result, a new monad with combined functionalities.
+-- | This transformer transforms a given monad, adding to it error handling capabilities to the inner value, as a result, a new monad with combined functionalities.
 -- | This transformer helps to reduce the boilerplate code generated when we combine monads with either.
 -- | Check the Test module to see examples of how to use it: 'StateTSpec'.
 
